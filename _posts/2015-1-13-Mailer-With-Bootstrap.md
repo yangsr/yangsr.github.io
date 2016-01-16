@@ -49,6 +49,18 @@ gem 'premailer-rails'
 {% endhighlight %}
 这样，一些Bootstrap的组件就可以在Email中显示了。
 
+要注意的额外事情是：
+如果我们使用了Rails的Asset Pipeline机制，最终这个email.css.scss文件会被打包进application.css.scss文件中，而我们仅仅希望这个文件只被用在邮件发送中，因此需要把它过滤掉。
+
+```ruby
+# application.css.scss
+/*
+*= require_self
+*= require_tree .
+*= stub email
+*/
+```
+
 ### 测试
 前面已经说过，Email中会遇到一些CSS属性在不同平台不同邮件服务商下的兼容性问题，当你引入Bootstrap后，同样也需要仔细测试。
 
