@@ -35,9 +35,11 @@ pushState方法接收三个参数：
 看看我们刚才提到的popstate事件，到它发挥作用的时候啦：
 
 ```javascript
-  $(window).bind("popstate", function () {
-    $.getScript(location.href);
-  });
+$(window).bind("popstate", function () {
+  // 需要注意的是，getScript发送的是AJAX请求
+  $.getScript(location.href);
+});
+
 ```
 每当激活的histroy entry发生变化时，都会触发popstate事件。当我们点击后退按钮的时候，浏览器的URL其实已经改变了，只是页面没有变化，于是我们只要执行getScript方法，并且把当前浏览器的URL传递给它就好啦。
 

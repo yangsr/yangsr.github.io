@@ -40,7 +40,7 @@ Device.where('id = 1').or(Device.where('id = 2'))
 def self.search(search)
   if search
     search.strip!
-    where("device_brand like ? OR serial_number like ? OR resolution like ?", search, search, search)
+    where("device_brand like ? OR serial_number like ? OR resolution like ?", "%#{search}%", "%#{search}%", "%#{search}%")
   else
     all
   end
@@ -49,7 +49,7 @@ end
 然而深入思考一下，如果有一天需求发生了变更：不再仅仅只针对三个字段进行模糊搜索，而是将模糊搜索的范围扩大到更多字段，那是不是需要拼一个非常长的`where`查询子句：
 
 ```ruby
-where("aaa like ? OR bbb like ? OR ccc like ? OR ddd like ? OR eee like ? OR fff like ?", param, param, param, param, param, param)
+where("aaa like ? OR bbb like ? OR ccc like ? OR ddd like ? OR eee like ? OR fff like ?", "%#{param}%", "%#{param}%", "%#{param}%", "%#{param}%", "%#{param}%", "%#{param}%")
 ```
 
 有没有更优雅一些的实现方案呢？
